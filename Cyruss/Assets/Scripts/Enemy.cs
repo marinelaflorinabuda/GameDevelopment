@@ -9,6 +9,7 @@ public class Enemy : MonoBehaviour
     private float Radius = 10f;
     private Vector3 _startingPosition;
     private float _angle;
+    public float points = 15;
 
     private void Start()
     {
@@ -26,6 +27,21 @@ public class Enemy : MonoBehaviour
 
     private void IncreaseRadius()
     {
-        Radius += 150;//Random.Range(100, 150);
+        Radius += 150;
+        points -= 5;
     }
+
+    public void Die()
+    {
+        Destroy(gameObject);
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.tag == "Player")
+        {
+            ScoreEventSystem.Instance.GameOver();
+        }
+    }
+
 }

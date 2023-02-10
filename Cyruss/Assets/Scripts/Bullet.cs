@@ -16,4 +16,19 @@ public class Bullet : MonoBehaviour
     {
         _rigidBody.velocity = transform.right * movementSpeed;
     }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        Debug.Log("OnTriggerEnter2D");
+        if(collision.tag == "Enemy")
+        {
+            var enemy = collision.GetComponent<Enemy>();
+            if(enemy == null) return;
+
+            Debug.Log("enemy.points = " + enemy.points);
+            ScoreEventSystem.Instance.ScoreUpdated(enemy.points);
+            enemy.Die();
+        }
+
+    }
 }
