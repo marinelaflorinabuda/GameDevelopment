@@ -9,16 +9,26 @@ public class EnemySpawner : MonoBehaviour
 
     private void Start()
     {
-        InvokeRepeating(nameof(SpawnEnemies), 5, 10);
+        InvokeRepeating(nameof(InstantiateEnemiesRepeating), 5, 15);
     }
 
-    private void SpawnEnemies()
+    private void InstantiateEnemiesRepeating()
+    {
+        StartCoroutine(nameof(SpawnEnemies));
+    }
+
+    private IEnumerator SpawnEnemies()
     {
         var randomNumber = Random.Range(2, 10);
         for(int i = 0; i<randomNumber;i++)
         {
-            Instantiate(_enemyLibraryReference,transform);
+            yield return new WaitForSeconds(1);
+            InstantiateEnemy();
         }
     }
 
+    private void InstantiateEnemy()
+    {
+        Instantiate(_enemyLibraryReference, transform);
+    }
 }
